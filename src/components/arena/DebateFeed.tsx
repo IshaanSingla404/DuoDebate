@@ -126,7 +126,7 @@ function MessageBubble({ message }: { message: DebateMessage }) {
           </span>
 
           {/* Move badge */}
-          <span className={`font-mono text-[9px] tracking-[0.15em] uppercase px-1.5 py-0.5 w-fit ${badgeColor}`}>
+          <span className={`font-mono text-[9px] tracking-[0.15em] uppercase px-1.5 py-0.5 w-fit rounded-md ${badgeColor}`}>
             {message.move}
           </span>
 
