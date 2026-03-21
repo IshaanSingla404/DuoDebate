@@ -83,7 +83,7 @@ export function UserPanel({ score, maxScore, selectedMove, onMoveChange }: UserP
       </span>
 
       {/* ── Player Card ── */}
-      <div className="border-l-2 border-l-duo-purple bg-duo-surface2 p-3">
+      <div className="border-l-2 border-l-duo-purple bg-duo-surface2 p-3 rounded-xl">
         <p className="font-syne font-bold text-lg text-primary-foreground">YOU</p>
         <p className="font-mono text-[9px] tracking-[0.2em] text-duo-muted uppercase">
           PROPOSING
