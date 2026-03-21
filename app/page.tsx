@@ -11,6 +11,12 @@ import { useRouter } from "next/navigation";
 
 export default function Landing() {
   const router = useRouter();
+  const [exiting, setExiting] = useState(false);
+
+  const handleEnter = () => {
+    setExiting(true);
+    setTimeout(() => router.push("/setup"), 600);
+  };
 
   /* ── Animation phase state ── */
   const [phase, setPhase] = useState(0);
@@ -46,7 +52,7 @@ export default function Landing() {
   }, [phase]);
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-background flex flex-col items-center justify-center">
+    <div className={`relative min-h-screen w-full overflow-hidden bg-background flex flex-col items-center justify-center transition-opacity duration-700 ease-in-out ${exiting ? "opacity-0" : "opacity-100"}`}>
       {/* ── Wordmark (top-left) ── */}
       <div
         className={`fixed top-6 left-6 z-20 font-mono text-xs tracking-[0.3em] text-duo-muted transition-opacity duration-500 ${phase >= 2 ? "opacity-100" : "opacity-0"
@@ -70,7 +76,7 @@ export default function Landing() {
 
         {/* ── Title: DEBATE ── */}
         <span
-          className={`font-syne font-extrabold leading-[0.9] tracking-tight color-cycle-text transition-all duration-400 ease-out ${phase >= 3
+          className={`font-syne font-extrabold leading-[0.9] tracking-tight color-cycle-text transition duration-500 ease-out ${phase >= 3
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-4"
             }`}
@@ -125,10 +131,9 @@ export default function Landing() {
           </div>
         </div>
 
-        {/* ── CTA Button ── */}
         <button
-          onClick={() => router.push("/setup")}
-          className={`color-cycle-btn font-syne font-bold tracking-widest uppercase px-8 py-3 rounded-lg mt-12 text-bold ${phase >= 5
+          onClick={handleEnter}
+          className={`color-cycle-btn font-syne font-bold tracking-widest uppercase px-8 py-3 rounded-lg mt-12 text-bold transition duration-300 ${phase >= 5
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-6"
             }`}

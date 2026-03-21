@@ -23,6 +23,7 @@ interface DebateFeedProps {
   inputValue: string;
   onInputChange: (val: string) => void;
   onSubmit: () => void;
+  stance: "for" | "against";
 }
 
 export default function DebateFeed({
@@ -32,6 +33,7 @@ export default function DebateFeed({
   inputValue,
   onInputChange,
   onSubmit,
+  stance,
 }: DebateFeedProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -40,11 +42,11 @@ export default function DebateFeed({
   }, [messages, isAiTyping]);
 
   return (
-    <div className="flex-1 flex flex-col min-w-0 bg-background">
+    <div className="flex-1 flex flex-col min-w-0 bg-background setup-panel-split border-y-0 relative z-10 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
       {/* ── Messages Area ── */}
       <div ref={scrollRef} className="flex-1 overflow-y-auto p-6 flex flex-col gap-4">
         {messages.map((msg) => (
-          <MessageBubble key={msg.id} message={msg} />
+          <MessageBubble key={msg.id} message={msg} stance={stance} />
         ))}
 
         {/* ── AI Typing Indicator ── */}
@@ -109,27 +111,51 @@ export default function DebateFeed({
 }
 
 /* ── Message Bubble ── */
-function MessageBubble({ message }: { message: DebateMessage }) {
+function MessageBubble({ message, stance }: { message: DebateMessage; stance: "for" | "against" }) {
   const isUser = message.sender === "user";
-  const bubbleClass = isUser ? "bubble-purple" : "bubble-blue";
-  const badgeColor = isUser ? "text-duo-purple bg-duo-purple/10 border border-duo-purple/30" : "text-duo-blue bg-duo-blue/10 border border-duo-blue/30";
+  const isFor = stance === "for";
+  
+  let themeArgs = {
+    text: "",
+    bg: "",
+    border: "",
+    bubble: "",
+    shadow: "",
+    label: ""
+  };
+
+  if (isUser) {
+    if (isFor) {
+      themeArgs = { text: "text-duo-cyan", bg: "bg-duo-cyan/10", border: "border-duo-cyan/30", bubble: "bubble-blue", shadow: "shadow-[0_0_15px_hsl(var(--duo-cyan)/0.2)]", label: "YOU" };
+    } else {
+      themeArgs = { text: "text-duo-magenta", bg: "bg-duo-magenta/10", border: "border-duo-magenta/30", bubble: "bubble-purple", shadow: "shadow-[0_0_15px_hsl(var(--duo-magenta)/0.2)]", label: "YOU" };
+    }
+  } else {
+    // AI gets opposite theme
+    if (isFor) {
+      themeArgs = { text: "text-duo-magenta", bg: "bg-duo-magenta/10", border: "border-duo-magenta/30", bubble: "bubble-purple", shadow: "shadow-[0_0_15px_hsl(var(--duo-magenta)/0.2)]", label: "AI" };
+    } else {
+      themeArgs = { text: "text-duo-cyan", bg: "bg-duo-cyan/10", border: "border-duo-cyan/30", bubble: "bubble-blue", shadow: "shadow-[0_0_15px_hsl(var(--duo-cyan)/0.2)]", label: "AI" };
+    }
+  }
+
+  const badgeColor = `${themeArgs.text} ${themeArgs.bg} ${themeArgs.border}`;
+  const avatarBg = `bg-gradient-to-br from-background to-duo-surface2 border ${themeArgs.border} ${themeArgs.shadow}`;
 
   return (
     <div className={`flex ${isUser ? "justify-start" : "justify-end"}`}>
       <div className={`flex items-start gap-3 max-w-[75%] ${isUser ? "" : "flex-row-reverse"}`}>
         {/* Avatar */}
         <div
-          className={`w-8 h-8 flex items-center justify-center shrink-0 rounded-lg ${
-            isUser ? "bg-gradient-to-br from-duo-purple/20 to-duo-surface2 border border-duo-purple/50 shadow-[0_0_15px_hsl(var(--duo-purple)/0.2)]" : "bg-gradient-to-br from-duo-blue/20 to-duo-surface2 border border-duo-blue/50 shadow-[0_0_15px_hsl(var(--duo-blue)/0.2)]"
-          }`}
+          className={`w-8 h-8 flex items-center justify-center shrink-0 rounded-lg ${avatarBg}`}
         >
-          <span className={`font-mono text-[9px] font-bold ${isUser ? "text-duo-purple" : "text-duo-blue"}`}>
-            {isUser ? "YOU" : "AI"}
+          <span className={`font-mono text-[9px] font-bold ${themeArgs.text}`}>
+            {themeArgs.label}
           </span>
         </div>
 
         {/* Bubble */}
-        <div className={`${bubbleClass} p-3 flex flex-col gap-1.5 rounded-xl`}>
+        <div className={`${themeArgs.bubble} p-3 flex flex-col gap-1.5 rounded-xl`}>
           {/* Round meta */}
           <span className="font-mono text-[0.65rem] tracking-[0.15em] text-duo-muted">
             Round {message.round} · {message.move}

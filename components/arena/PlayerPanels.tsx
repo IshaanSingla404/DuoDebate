@@ -49,9 +49,16 @@ interface UserPanelProps {
   maxScore: number;
   selectedMove: Move;
   onMoveChange: (move: Move) => void;
+  stance: "for" | "against";
 }
 
-export function UserPanel({ score, maxScore, selectedMove, onMoveChange }: UserPanelProps) {
+export function UserPanel({ score, maxScore, selectedMove, onMoveChange, stance }: UserPanelProps) {
+  const isFor = stance === "for";
+  const bgClass = isFor ? "setup-panel-blue" : "setup-panel-pink";
+  const activeBtnBg = isFor ? "bg-duo-cyan/20 border-duo-cyan text-white shadow-[0_0_10px_rgba(29,209,161,0.4)]" : "bg-duo-magenta/20 border-duo-magenta text-white shadow-[0_0_10px_rgba(255,71,87,0.4)]";
+  const inactiveBtnBg = isFor ? "hover:border-duo-cyan/50" : "hover:border-duo-magenta/50";
+  const progressGradient = isFor ? "from-duo-blue to-duo-cyan" : "from-duo-purple to-duo-magenta";
+  const floatColor = isFor ? "text-duo-cyan" : "text-duo-magenta";
   const [prevScore, setPrevScore] = useState(score);
   const [floats, setFloats] = useState<{ id: number; val: number }[]>([]);
   const [popping, setPopping] = useState(false);
@@ -77,7 +84,7 @@ export function UserPanel({ score, maxScore, selectedMove, onMoveChange }: UserP
   };
 
   return (
-    <aside className="w-[220px] min-w-[220px] capi-panel flex flex-col p-4 gap-5 overflow-y-auto rounded-r-2xl border-l-0 rounded-l-none">
+    <aside className={`w-[220px] min-w-[220px] ${bgClass} flex flex-col p-4 gap-5 overflow-y-auto rounded-r-2xl border-l-0 rounded-l-none`}>
       {/* ── Section Label ── */}
       <span className="font-mono text-[0.65rem] tracking-[0.2em] text-duo-muted uppercase">
         YOUR CORNER
@@ -110,7 +117,7 @@ export function UserPanel({ score, maxScore, selectedMove, onMoveChange }: UserP
         {/* ── XP Progress Bar ── */}
         <div className="w-full h-[3px] bg-duo-border2 mt-2 rounded-full overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-duo-purple to-duo-cyan transition-all duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+            className={`h-full bg-gradient-to-r ${progressGradient} transition-all duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)]`}
             style={{ width: `${Math.min(100, (score / Math.max(maxScore, 1)) * 100)}%` }}
           />
         </div>
@@ -121,12 +128,16 @@ export function UserPanel({ score, maxScore, selectedMove, onMoveChange }: UserP
         <span className="font-mono text-[0.65rem] tracking-[0.2em] text-duo-muted uppercase">
           RHETORICAL MOVES
         </span>
-        <div className="flex flex-wrap gap-1.5">
+        <div className="grid grid-cols-2 gap-2">
           {MOVES.map((move) => (
             <button
               key={move}
               onClick={() => handleMoveChange(move)}
-              className={`chip-move ${selectedMove === move ? "active" : ""}`}
+              className={`py-2 px-1 text-[0.65rem] tracking-wider font-mono font-medium rounded-md border transition-all ${
+                selectedMove === move
+                  ? activeBtnBg
+                  : `bg-transparent border-duo-border2 text-duo-muted hover:text-white ${inactiveBtnBg}`
+              }`}
             >
               {move}
             </button>
@@ -159,6 +170,7 @@ interface AIPanelProps {
   currentRound: number;
   totalRounds: number;
   onRequestVerdict: () => void;
+  stance: "for" | "against";
 }
 
 export function AIPanel({
@@ -168,6 +180,7 @@ export function AIPanel({
   currentRound,
   totalRounds,
   onRequestVerdict,
+  stance,
 }: AIPanelProps) {
   const diffColor =
     difficulty === "novice"
@@ -176,11 +189,13 @@ export function AIPanel({
       ? "text-duo-purple"
       : "text-duo-magenta";
 
-  const barGradient =
-    "bg-gradient-to-r from-duo-blue to-duo-magenta";
+  const isFor = stance === "for";
+  const bgClass = isFor ? "setup-panel-blue" : "setup-panel-pink";
+  const barGradient = isFor ? "bg-gradient-to-r from-duo-blue to-duo-cyan" : "bg-gradient-to-r from-duo-purple to-duo-magenta";
+  const btnClass = isFor ? "btn-arena glow-cyan" : "btn-arena-pink glow-magenta";
 
   return (
-    <aside className="w-[220px] min-w-[220px] capi-panel flex flex-col p-4 gap-5 overflow-y-auto rounded-l-2xl border-r-0 rounded-r-none">
+    <aside className={`w-[220px] min-w-[220px] ${bgClass} flex flex-col p-4 gap-5 overflow-y-auto rounded-l-2xl border-r-0 rounded-r-none`}>
       {/* ── Section Label ── */}
       <span className="font-mono text-[0.65rem] tracking-[0.2em] text-duo-muted uppercase">
         AI OPPONENT
@@ -232,7 +247,7 @@ export function AIPanel({
 
       {/* ── Request Verdict ── */}
       <div className="mt-auto">
-        <button onClick={onRequestVerdict} className="btn-verdict w-full glow-magenta">
+        <button onClick={onRequestVerdict} className={`${btnClass} w-full`}>
           ⬡ REQUEST VERDICT
         </button>
       </div>

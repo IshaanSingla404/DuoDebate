@@ -11,10 +11,13 @@
 @layer base {
   :root {
     /* ── Core Background Levels (3-depth system) ── */
-    --bg-page: 245 40% 4%;            /* Darkest, near black with purple tint */
-    --bg-panel: 247 35% 8%;           /* Mid-level dark purple/navy */
-    --bg-card: 250 30% 12%;           /* Slightly lighter than panel */
-    
+    --bg-page: 245 40% 4%;
+    /* Darkest, near black with purple tint */
+    --bg-panel: 247 35% 8%;
+    /* Mid-level dark purple/navy */
+    --bg-card: 250 30% 12%;
+    /* Slightly lighter than panel */
+
     --background: var(--bg-page);
     --foreground: 248 30% 92%;
 
@@ -25,7 +28,8 @@
     --popover-foreground: 248 30% 92%;
 
     /* ── Primary: Electric Purple ── */
-    --primary: 248 100% 70%;          /* #7c6aff */
+    --primary: 248 100% 70%;
+    /* #7c6aff */
     --primary-foreground: 0 0% 100%;
 
     /* ── Secondary: Surface button ── */
@@ -33,19 +37,22 @@
     --secondary-foreground: 248 30% 92%;
 
     /* ── Muted ── */
-    --muted: 252 12% 60%;             /* #8884a8 */
+    --muted: 252 12% 60%;
+    /* #8884a8 */
     --muted-foreground: 252 12% 60%;
 
     /* ── Accent: Cyan ── */
-    --accent: 174 100% 56%;           /* #1dd1a1 / cyan area */
+    --accent: 174 100% 56%;
+    /* #1dd1a1 / cyan area */
     --accent-foreground: 0 0% 100%;
 
     /* ── Destructive: Red ── */
-    --destructive: 4 100% 64%;        /* #ff4757 */
+    --destructive: 4 100% 64%;
+    /* #ff4757 */
     --destructive-foreground: 0 0% 100%;
 
     /* ── Borders ── */
-    --border: 250 30% 20%;            
+    --border: 250 30% 20%;
     --input: 250 30% 20%;
     --ring: 248 100% 70%;
 
@@ -58,7 +65,8 @@
     --duo-border: 250 30% 20%;
     --duo-border2: 250 30% 28%;
     --duo-text: 0 0% 100%;
-    --duo-muted: 250 15% 65%;         /* Muted purple-gray */
+    --duo-muted: 250 15% 65%;
+    /* Muted purple-gray */
     --duo-dim: 248 14% 45%;
     --duo-purple: 248 55% 60%;
     --duo-magenta: 320 80% 60%;
@@ -118,37 +126,37 @@
 @layer components {
   .glow-purple {
     box-shadow: 0 0 15px hsl(var(--duo-magenta) / 0.4),
-                0 0 40px hsl(var(--duo-purple) / 0.25);
+      0 0 40px hsl(var(--duo-purple) / 0.25);
   }
 
   .glow-purple-intense {
     box-shadow: 0 0 20px hsl(var(--duo-magenta) / 0.7),
-                0 0 80px hsl(var(--duo-purple) / 0.35);
+      0 0 80px hsl(var(--duo-purple) / 0.35);
   }
 
   .glow-blue {
     box-shadow: 0 0 12px hsl(var(--duo-blue) / 0.4),
-                0 0 40px hsl(var(--duo-blue) / 0.15);
+      0 0 40px hsl(var(--duo-blue) / 0.15);
   }
 
   .glow-magenta {
     box-shadow: 0 0 12px hsl(var(--duo-magenta) / 0.4),
-                0 0 40px hsl(var(--duo-magenta) / 0.15);
+      0 0 40px hsl(var(--duo-magenta) / 0.15);
   }
 
   .glow-cyan {
     box-shadow: 0 0 12px hsl(var(--duo-cyan) / 0.4),
-                0 0 40px hsl(var(--duo-cyan) / 0.15);
+      0 0 40px hsl(var(--duo-cyan) / 0.15);
   }
 
   .text-glow-purple {
     text-shadow: 0 0 20px hsl(var(--duo-purple) / 0.5),
-                 0 0 60px hsl(var(--duo-purple) / 0.2);
+      0 0 60px hsl(var(--duo-purple) / 0.2);
   }
 
   .text-glow-magenta {
     text-shadow: 0 0 20px hsl(var(--duo-magenta) / 0.5),
-                 0 0 60px hsl(var(--duo-magenta) / 0.2);
+      0 0 60px hsl(var(--duo-magenta) / 0.2);
   }
 }
 
@@ -157,11 +165,10 @@
    ═══════════════════════════════════════════════════════════════ */
 
 @layer components {
+
   /* Primary CTA — Purple to pink gradient fill */
   .btn-arena {
-    @apply relative overflow-hidden font-syne font-bold tracking-widest uppercase
-           px-8 py-3 rounded-lg text-white border-none
-           transition-all duration-200 ease-out cursor-pointer;
+    @apply relative overflow-hidden font-syne font-bold tracking-widest uppercase px-8 py-3 rounded-lg text-white border-none transition-all duration-200 ease-out cursor-pointer;
     background: linear-gradient(135deg, hsl(var(--duo-blue) / 0.95), hsl(var(--duo-cyan) / 0.95));
     box-shadow: 0 4px 12px hsl(var(--duo-cyan) / 0.25);
   }
@@ -177,9 +184,7 @@
   }
 
   .btn-arena-pink {
-    @apply relative overflow-hidden font-syne font-bold tracking-widest uppercase
-           px-8 py-3 rounded-lg text-white border-none
-           transition-all duration-200 ease-out cursor-pointer;
+    @apply relative overflow-hidden font-syne font-bold tracking-widest uppercase px-8 py-3 rounded-lg text-white border-none transition-all duration-200 ease-out cursor-pointer;
     background: linear-gradient(135deg, hsl(var(--duo-purple) / 0.95), hsl(var(--duo-magenta) / 0.95));
     box-shadow: 0 4px 12px hsl(var(--duo-magenta) / 0.25);
   }
@@ -196,12 +201,11 @@
 
   /* Secondary/Toggle Buttons — transparent with faint 5% fill */
   .btn-toggle {
-    @apply font-mono-jb uppercase tracking-wider
-           px-4 py-2 border rounded-lg
-           transition-all duration-150 ease-out cursor-pointer;
+    @apply font-mono-jb uppercase tracking-wider px-4 py-2 border rounded-lg transition-all duration-150 ease-out cursor-pointer;
     font-size: 0.75rem;
     border-color: rgba(255, 255, 255, 0.04);
-    background: rgba(255, 255, 255, 0.02); /* very faint */
+    background: rgba(255, 255, 255, 0.02);
+    /* very faint */
     color: hsl(var(--duo-muted));
   }
 
@@ -212,7 +216,7 @@
   .btn-toggle.active-blue {
     border: none;
     color: white;
-    background: linear-gradient(135deg, #2563eb, #1e40af); 
+    background: linear-gradient(135deg, #2563eb, #1e40af);
     box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
   }
 
@@ -226,21 +230,21 @@
   .btn-toggle.active-sky {
     border: none;
     color: black;
-    background: linear-gradient(135deg, #38bdf8, #0ea5e9); 
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
     box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
   }
 
   .btn-toggle.active-purple {
     border: none;
     color: white;
-    background: linear-gradient(135deg, #9333ea, #7e22ce); 
+    background: linear-gradient(135deg, #9333ea, #7e22ce);
     box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4);
   }
 
   .btn-toggle.active-magenta {
     border: none;
     color: white;
-    background: linear-gradient(135deg, #d946ef, #c026d3); 
+    background: linear-gradient(135deg, #d946ef, #c026d3);
     box-shadow: 0 4px 15px rgba(217, 70, 239, 0.4);
   }
 
@@ -261,22 +265,23 @@
    ═══════════════════════════════════════════════════════════════ */
 
 @layer components {
+
   /* Panels and Cards: Thin 1px solid border, mid-brightness purple, dual-layer shadow bleed */
   .capi-card {
     background-color: hsl(var(--bg-card) / 0.8);
     backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.04);
-    box-shadow: inset 0 0 20px hsl(var(--duo-blue) / 0.03), 
-                0 0 20px 4px hsl(var(--duo-cyan) / 0.02);
+    box-shadow: inset 0 0 20px hsl(var(--duo-blue) / 0.03),
+      0 0 20px 4px hsl(var(--duo-cyan) / 0.02);
     border-radius: 1rem;
   }
-  
+
   .capi-panel {
     background-color: hsl(var(--bg-panel) / 0.8);
     backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.04);
-    box-shadow: inset 0 0 20px hsl(var(--duo-blue) / 0.03), 
-                0 0 30px 6px hsl(var(--duo-cyan) / 0.02);
+    box-shadow: inset 0 0 20px hsl(var(--duo-blue) / 0.03),
+      0 0 30px 6px hsl(var(--duo-cyan) / 0.02);
     border-radius: 1rem;
     transition: all 0.5s ease;
   }
@@ -293,8 +298,8 @@
     background: linear-gradient(135deg, hsl(var(--duo-blue) / 0.15), hsl(var(--bg-panel) / 0.8) 60%);
     backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.04);
-    box-shadow: inset 0 0 60px hsl(var(--duo-blue) / 0.1), 
-                0 0 40px 8px hsl(var(--duo-cyan) / 0.04);
+    box-shadow: inset 0 0 60px hsl(var(--duo-blue) / 0.1),
+      0 0 40px 8px hsl(var(--duo-cyan) / 0.04);
     border-radius: 1rem;
     transition: all 0.5s ease;
   }
@@ -303,8 +308,8 @@
     background: linear-gradient(135deg, hsl(var(--duo-magenta) / 0.15), hsl(var(--bg-panel) / 0.8) 60%);
     backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.04);
-    box-shadow: inset 0 0 60px hsl(var(--duo-magenta) / 0.1), 
-                0 0 40px 8px hsl(310 80% 65% / 0.04);
+    box-shadow: inset 0 0 60px hsl(var(--duo-magenta) / 0.1),
+      0 0 40px 8px hsl(310 80% 65% / 0.04);
     border-radius: 1rem;
     transition: all 0.5s ease;
   }
@@ -328,38 +333,63 @@
    ═══════════════════════════════════════════════════════════════ */
 
 @keyframes glowPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 12px hsl(var(--duo-purple) / 0.3),
-                0 0 40px hsl(var(--duo-purple) / 0.1);
+      0 0 40px hsl(var(--duo-purple) / 0.1);
   }
+
   50% {
     box-shadow: 0 0 20px hsl(var(--duo-purple) / 0.5),
-                0 0 60px hsl(var(--duo-purple) / 0.2);
+      0 0 60px hsl(var(--duo-purple) / 0.2);
   }
 }
 
 @keyframes floorSweep {
-  0% { opacity: 0; transform: translateX(-20px); }
-  15% { opacity: 1; transform: translateX(0); }
-  85% { opacity: 1; transform: translateX(0); }
-  100% { opacity: 0; transform: translateX(20px); }
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  15% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  85% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
 }
 
 @keyframes bg-pan-slow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @layer components {
   .color-cycle-text {
-    background: linear-gradient(90deg, 
-      hsl(var(--duo-blue)), 
-      hsl(var(--duo-cyan)), 
-      hsl(var(--duo-magenta)), 
-      hsl(var(--duo-purple)), 
-      hsl(var(--duo-blue))
-    );
+    background: linear-gradient(90deg,
+        hsl(var(--duo-blue)),
+        hsl(var(--duo-cyan)),
+        hsl(var(--duo-magenta)),
+        hsl(var(--duo-purple)),
+        hsl(var(--duo-blue)));
     background-size: 300% 100%;
     background-attachment: fixed;
     animation: bg-pan-slow 12s linear infinite;
@@ -369,15 +399,13 @@
   }
 
   .color-cycle-btn {
-    background: linear-gradient(90deg, 
-      hsl(var(--duo-blue)), 
-      hsl(var(--duo-cyan)), 
-      hsl(var(--duo-magenta)), 
-      hsl(var(--duo-purple)), 
-      hsl(var(--duo-blue))
-    );
+    background: linear-gradient(90deg,
+        hsl(var(--duo-blue)),
+        hsl(var(--duo-cyan)),
+        hsl(var(--duo-magenta)),
+        hsl(var(--duo-purple)),
+        hsl(var(--duo-blue)));
     background-size: 300% 100%;
-    background-attachment: fixed;
     animation: bg-pan-slow 12s linear infinite;
     border: none;
     color: white;
@@ -391,17 +419,27 @@
 }
 
 @keyframes pipPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 4px hsl(var(--duo-purple) / 0.4);
   }
+
   50% {
     box-shadow: 0 0 12px hsl(var(--duo-purple) / 0.8);
   }
 }
 
 @keyframes dotPulse {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
+
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 
 @layer utilities {

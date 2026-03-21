@@ -35,11 +35,11 @@ export default function Setup() {
 
   const handleBegin = () => {
     setExiting(true);
-    setTimeout(() => router.push("/arena"), 500);
+    setTimeout(() => router.push(`/arena?stance=${stance}&difficulty=${difficulty}`), 500);
   };
 
   return (
-    <div className="relative min-h-screen w-full bg-background flex items-center justify-center px-4 overflow-hidden">
+    <div className={`relative min-h-screen w-full bg-background flex flex-col items-center justify-center px-4 overflow-hidden transition-transform duration-500 ease-in-out ${exiting ? "-translate-y-full" : "translate-y-0"}`}>
       {/* ── Ambient Background Glows (4 Corners Diagonal) ── */}
       {/* Top-Left */}
       <div 
@@ -65,18 +65,6 @@ export default function Setup() {
           !stance ? "bg-duo-magenta" : isFor ? "bg-duo-blue" : "bg-duo-magenta"
         }`} 
       />
-      {/* ── Split-wipe exit animation ── */}
-      {exiting && (
-        <>
-          <div className="fixed inset-0 z-50 w-1/2 left-0 bg-background animate-[slideOutLeft_0.5s_ease-in_forwards]" />
-          <div className="fixed inset-0 z-50 w-1/2 right-0 left-1/2 bg-background animate-[slideOutRight_0.5s_ease-in_forwards]" />
-          <style>{`
-            @keyframes slideOutLeft { to { transform: translateX(-100%); } }
-            @keyframes slideOutRight { to { transform: translateX(100%); } }
-          `}</style>
-        </>
-      )}
-
       {/* ── Setup Card ── */}
       <div className={`${panelClass} w-full max-w-[580px]`}>
         <div className="p-9 flex flex-col gap-9">

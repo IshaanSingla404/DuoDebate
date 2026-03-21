@@ -6,7 +6,8 @@
    Route: /arena
    ═══════════════════════════════════════════════════════════════ */
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import ArenaHudBar from "@/components/arena/ArenaHudBar";
 import { UserPanel, AIPanel } from "@/components/arena/PlayerPanels";
 import DebateFeed, { type DebateMessage } from "@/components/arena/DebateFeed";
@@ -24,9 +25,10 @@ const DEMO_MESSAGES: DebateMessage[] = [
   },
 ];
 
-export default function Arena() {
-  /* ── State ── */
-  const stance = "for"; // Scope: Top level constant pending real context logic
+function ArenaContent() {
+  const searchParams = useSearchParams();
+  const stance = (searchParams.get("stance") as "for" | "against") || "for";
+  const difficulty = (searchParams.get("difficulty") as "novice" | "adept" | "oracle") || "adept";
   const [selectedMove, setSelectedMove] = useState<
     "ARGUMENT" | "REBUTTAL" | "EVIDENCE" | "ANALOGY" | "CONCESSION" | "CHALLENGE"
   >("ARGUMENT");
@@ -73,15 +75,27 @@ export default function Arena() {
 
 
   return (
-    <div className="h-screen w-screen flex flex-col bg-background overflow-hidden relative">
+    <div className="h-dvh w-screen flex flex-col bg-background overflow-hidden relative z-0" style={{ animation: 'arenaSlideIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards' }}>
+      <style>{`
+        @keyframes arenaSlideIn {
+          from { transform: translateY(100%); }
+          to   { transform: translateY(0); }
+        }
+      `}</style>
+
+      {/* ── Ambient Background Glows ── */}
+      <div className={`absolute -top-[10%] -left-[10%] w-[45vw] h-[45vw] rounded-full blur-[120px] pointer-events-none opacity-[0.06] ${stance === "for" ? "bg-duo-blue" : "bg-duo-magenta"}`} />
+      <div className={`absolute -bottom-[10%] -left-[10%] w-[45vw] h-[45vw] rounded-full blur-[120px] pointer-events-none opacity-[0.06] ${stance === "for" ? "bg-duo-cyan" : "bg-duo-purple"}`} />
+      <div className={`absolute -top-[10%] -right-[10%] w-[45vw] h-[45vw] rounded-full blur-[120px] pointer-events-none opacity-[0.06] ${stance !== "for" ? "bg-duo-blue" : "bg-duo-magenta"}`} />
+      <div className={`absolute -bottom-[10%] -right-[10%] w-[45vw] h-[45vw] rounded-full blur-[120px] pointer-events-none opacity-[0.06] ${stance !== "for" ? "bg-duo-cyan" : "bg-duo-purple"}`} />
 
       {/* ── Top HUD Bar ── */}
       <ArenaHudBar
         motion="perfumes"
         currentRound={1}
         totalRounds={5}
-        stance="for"
-        difficulty="adept"
+        stance={stance}
+        difficulty={difficulty}
       />
 
       {/* ── Three-Column Layout ── */}
@@ -92,6 +106,7 @@ export default function Arena() {
           maxScore={30}
           selectedMove={selectedMove}
           onMoveChange={setSelectedMove}
+          stance={stance}
         />
 
         {/* ── Center: Debate Feed ── */}
@@ -102,16 +117,18 @@ export default function Arena() {
           inputValue={inputValue}
           onInputChange={setInputValue}
           onSubmit={handleSubmit}
+          stance={stance}
         />
 
         {/* ── Right Panel: AI Opponent ── */}
         <AIPanel
           score={aiScore}
           maxScore={30}
-          difficulty="adept"
+          difficulty={difficulty}
           currentRound={1}
           totalRounds={5}
           onRequestVerdict={() => setShowVerdict(true)}
+          stance={stance === "for" ? "against" : "for"}
         />
       </div>
 
@@ -123,5 +140,13 @@ export default function Arena() {
         onClose={() => setShowVerdict(false)}
       />
     </div>
+  );
+}
+
+export default function Arena() {
+  return (
+    <Suspense fallback={<div className="h-screen w-screen bg-background" />}>
+      <ArenaContent />
+    </Suspense>
   );
 }
