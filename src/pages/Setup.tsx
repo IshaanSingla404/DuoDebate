@@ -27,7 +27,7 @@ export default function Setup() {
   };
 
   return (
-    <div className="scanline-overlay noise-overlay relative min-h-screen w-full bg-background flex items-center justify-center px-4">
+    <div className="relative min-h-screen w-full bg-background flex items-center justify-center px-4">
       {/* ── Split-wipe exit animation ── */}
       {exiting && (
         <>
