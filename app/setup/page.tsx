@@ -35,7 +35,7 @@ export default function Setup() {
 
   const handleBegin = () => {
     setExiting(true);
-    setTimeout(() => router.push(`/arena?stance=${stance}&difficulty=${difficulty}`), 500);
+    setTimeout(() => router.push(`/arena?stance=${stance}&difficulty=${difficulty}&motion=${encodeURIComponent(motion)}`), 500);
   };
 
   return (

@@ -1,5 +1,6 @@
 {
-  "/page": "app/page.js",
+  "/setup/page": "app/setup/page.js",
   "/arena/page": "app/arena/page.js",
-  "/setup/page": "app/setup/page.js"
+  "/page": "app/page.js",
+  "/api/debate/route": "app/api/debate/route.js"
 }

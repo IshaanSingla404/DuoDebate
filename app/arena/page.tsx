@@ -6,71 +6,147 @@
    Route: /arena
    ═══════════════════════════════════════════════════════════════ */
 
-import { useState, Suspense } from "react";
+import { useState, Suspense, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import ArenaHudBar from "@/components/arena/ArenaHudBar";
 import { UserPanel, AIPanel } from "@/components/arena/PlayerPanels";
 import DebateFeed, { type DebateMessage } from "@/components/arena/DebateFeed";
 import VerdictOverlay from "@/components/arena/VerdictOverlay";
 
-/* ── Placeholder demo messages ── */
-const DEMO_MESSAGES: DebateMessage[] = [
-  {
-    id: "1",
-    sender: "ai",
-    move: "ARGUMENT",
-    text: "The motion to promote perfumes is misguided, as it ignores the significant environmental and health concerns associated with the production and consumption of perfumes. The harvesting of rare ingredients, such as musk and ambergris, can lead to the exploitation of endangered species.",
-    round: 1,
-    feedback: { text: "Strong opening — sets clear framework", type: "strong" },
-  },
-];
+/* ── Helper: fetch with timeout ── */
+async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs = 30000): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, { ...options, signal: controller.signal });
+    return res;
+  } finally {
+    clearTimeout(timer);
+  }
+}
 
 function ArenaContent() {
   const searchParams = useSearchParams();
   const stance = (searchParams.get("stance") as "for" | "against") || "for";
   const difficulty = (searchParams.get("difficulty") as "novice" | "adept" | "oracle") || "adept";
+  const motion = searchParams.get("motion") || "perfumes";
   const [selectedMove, setSelectedMove] = useState<
     "ARGUMENT" | "REBUTTAL" | "EVIDENCE" | "ANALOGY" | "CONCESSION" | "CHALLENGE"
   >("ARGUMENT");
   const [inputValue, setInputValue] = useState("");
-  const [messages, setMessages] = useState<DebateMessage[]>(DEMO_MESSAGES);
+  const [messages, setMessages] = useState<DebateMessage[]>([]);
   const [isAiTyping, setIsAiTyping] = useState(false);
   const [showVerdict, setShowVerdict] = useState(false);
+  const [initialFetched, setInitialFetched] = useState(false);
+
+  const currentRound = Math.floor(messages.length / 2) + 1;
+
+  /* ── Call the debate API ── */
+  const callDebateAPI = useCallback(async (
+    conversationMessages: { sender: string; text: string }[],
+    signal?: AbortSignal
+  ) => {
+    const res = await fetchWithTimeout(
+      "/api/debate",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ motion, stance, difficulty, messages: conversationMessages }),
+        signal,
+      },
+      30000
+    );
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({ error: "Unknown server error" }));
+      throw new Error(errorData.error || `Server responded with ${res.status}`);
+    }
+
+    const data = await res.json();
+    if (!data.reply) {
+      throw new Error("No reply in API response");
+    }
+    return data;
+  }, [motion, stance, difficulty]);
+
+  /* ── Fetch AI opening statement on mount ── */
+  useEffect(() => {
+    if (initialFetched) return;
+
+    const abortController = new AbortController();
+    let cancelled = false;
+
+    const fetchInitial = async () => {
+      setIsAiTyping(true);
+      try {
+        const data = await callDebateAPI([], abortController.signal);
+        if (!cancelled) {
+          setMessages([{
+            id: Date.now().toString(),
+            sender: "ai",
+            move: data.move || "ARGUMENT",
+            text: data.reply,
+            round: 1,
+          }]);
+          setInitialFetched(true);
+        }
+      } catch (err: unknown) {
+        if (!cancelled) {
+          const msg = err instanceof Error ? err.message : String(err);
+          if (!msg.includes("abort")) {
+            console.error("Failed to fetch initial AI opening:", err);
+          }
+        }
+      } finally {
+        if (!cancelled) setIsAiTyping(false);
+      }
+    };
+    fetchInitial();
+    return () => {
+      cancelled = true;
+      abortController.abort();
+    };
+  }, [initialFetched, callDebateAPI]);
 
   /* ── Placeholder scores ── */
   const userScore = 0;
   const aiScore = 0;
 
-  /* ── Placeholder submit handler ── */
-  const handleSubmit = () => {
-    if (!inputValue.trim()) return;
+  /* ── Submit handler ── */
+  const handleSubmit = async () => {
+    if (!inputValue.trim() || isAiTyping) return;
 
     const newMsg: DebateMessage = {
       id: Date.now().toString(),
       sender: "user",
       move: selectedMove,
       text: inputValue,
-      round: 1,
+      round: currentRound,
     };
-    setMessages((prev) => [...prev, newMsg]);
+    const newMessages = [...messages, newMsg];
+    setMessages(newMessages);
     setInputValue("");
-
-    // Simulate AI typing
     setIsAiTyping(true);
-    setTimeout(() => {
-      setMessages((prev) => [
+
+    try {
+      const data = await callDebateAPI(
+        newMessages.map(m => ({ sender: m.sender, text: m.text }))
+      );
+      setMessages(prev => [
         ...prev,
         {
           id: (Date.now() + 1).toString(),
           sender: "ai",
-          move: "REBUTTAL",
-          text: "An interesting point, but it fails to address the core economic benefits that the perfume industry brings to developing nations where these ingredients are sourced. Your argument conflates correlation with causation.",
-          round: 1,
-          feedback: { text: "Address the economic counter-point", type: "weak" },
+          move: data.move || "REBUTTAL",
+          text: data.reply,
+          round: currentRound,
         },
       ]);
+    } catch (err) {
+      console.error("Failed to fetch AI reply:", err);
+    } finally {
       setIsAiTyping(false);
-    }, 2000);
+    }
   };
 
 
@@ -91,8 +167,8 @@ function ArenaContent() {
 
       {/* ── Top HUD Bar ── */}
       <ArenaHudBar
-        motion="perfumes"
-        currentRound={1}
+        motion={motion}
+        currentRound={currentRound}
         totalRounds={5}
         stance={stance}
         difficulty={difficulty}
@@ -125,7 +201,7 @@ function ArenaContent() {
           score={aiScore}
           maxScore={30}
           difficulty={difficulty}
-          currentRound={1}
+          currentRound={currentRound}
           totalRounds={5}
           onRequestVerdict={() => setShowVerdict(true)}
           stance={stance === "for" ? "against" : "for"}
