@@ -248,7 +248,7 @@
   /* Stance/difficulty toggle buttons */
   .btn-toggle {
     @apply font-mono-jb text-xs uppercase tracking-wider
-           px-4 py-2 border bg-transparent
+           px-4 py-2 border bg-transparent rounded-lg
            transition-all duration-150 ease-out cursor-pointer;
     border-color: hsl(var(--duo-border2));
     color: hsl(var(--duo-muted));
