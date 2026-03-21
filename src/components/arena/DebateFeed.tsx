@@ -49,7 +49,7 @@ export default function DebateFeed({
         {/* ── AI Typing Indicator ── */}
         {isAiTyping && (
           <div className="flex justify-end">
-            <div className="flex items-center gap-1 bg-duo-surface2 border border-duo-border px-4 py-3 border-r-2 border-r-duo-red">
+            <div className="flex items-center gap-1 bg-duo-surface2 border border-duo-border px-4 py-3 border-r-2 border-r-duo-red rounded-xl">
               <span className="w-1.5 h-1.5 bg-duo-red animate-dot-pulse" style={{ animationDelay: "0ms" }} />
               <span className="w-1.5 h-1.5 bg-duo-red animate-dot-pulse" style={{ animationDelay: "200ms" }} />
               <span className="w-1.5 h-1.5 bg-duo-red animate-dot-pulse" style={{ animationDelay: "400ms" }} />
