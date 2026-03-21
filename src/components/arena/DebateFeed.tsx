@@ -109,7 +109,7 @@ function MessageBubble({ message }: { message: DebateMessage }) {
       <div className={`flex items-start gap-3 max-w-[75%] ${isUser ? "" : "flex-row-reverse"}`}>
         {/* Avatar */}
         <div
-          className={`w-8 h-8 flex items-center justify-center shrink-0 ${
+          className={`w-8 h-8 flex items-center justify-center shrink-0 rounded-lg ${
             isUser ? "bg-duo-surface2 border border-duo-purple/30" : "bg-duo-surface2 border border-duo-red/30"
           }`}
         >
