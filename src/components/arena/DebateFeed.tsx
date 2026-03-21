@@ -83,7 +83,7 @@ export default function DebateFeed({
             }}
             placeholder="State your argument…"
             rows={2}
-            className="flex-1 bg-duo-surface2 border border-duo-border text-foreground font-space text-sm p-3 resize-none min-h-[52px] max-h-[110px] placeholder:text-duo-dim focus:outline-none focus:border-duo-purple focus:shadow-[0_0_12px_hsl(248_100%_70%/0.2)] transition-all duration-200"
+            className="flex-1 bg-duo-surface2 border border-duo-border text-foreground font-space text-sm p-3 resize-none min-h-[52px] max-h-[110px] rounded-xl placeholder:text-duo-dim focus:outline-none focus:border-duo-purple focus:shadow-[0_0_12px_hsl(248_100%_70%/0.2)] transition-all duration-200"
           />
           <button
             onClick={onSubmit}
