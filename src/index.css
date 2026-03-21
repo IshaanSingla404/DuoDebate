@@ -88,10 +88,6 @@
     font-family: 'Space Grotesk', sans-serif;
   }
 
-  /* All sharp corners */
-  *, *::before, *::after {
-    border-radius: 0 !important;
-  }
 }
 
 /* ═══════════════════════════════════════════════════════════════
