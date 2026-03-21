@@ -44,7 +44,7 @@
     --input: 240 18% 16%;
     --ring: 248 100% 70%;
 
-    --radius: 0px;                    /* Sharp corners everywhere */
+    --radius: 12px;
 
     /* ── DuoDebate Extended Palette ── */
     --duo-bg: 240 20% 3%;
