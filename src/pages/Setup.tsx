@@ -41,7 +41,7 @@ export default function Setup() {
       )}
 
       {/* ── Setup Card ── */}
-      <div className="glass-panel-strong w-full max-w-[580px] border-t-2 border-t-duo-purple">
+      <div className="glass-panel-strong w-full max-w-[580px] border-t-2 border-t-duo-purple rounded-2xl overflow-hidden">
         <div className="p-8 flex flex-col gap-6">
           {/* ── Eyebrow Label ── */}
           <span className="font-mono text-[11px] tracking-[0.25em] text-duo-dim uppercase">
