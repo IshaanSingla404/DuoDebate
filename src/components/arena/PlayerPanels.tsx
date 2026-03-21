@@ -186,7 +186,7 @@ export function AIPanel({
       </span>
 
       {/* ── AI Player Card ── */}
-      <div className="border-l-2 border-l-duo-red bg-duo-surface2 p-3">
+      <div className="border-l-2 border-l-duo-red bg-duo-surface2 p-3 rounded-xl">
         <p className="font-syne font-bold text-lg text-primary-foreground">ADVERSUS</p>
         <p className="font-mono text-[9px] tracking-[0.2em] text-duo-muted uppercase">
           OPPOSING
