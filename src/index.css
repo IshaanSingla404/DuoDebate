@@ -163,7 +163,7 @@
   /* Primary CTA — neon purple border with glow pulse */
   .btn-arena {
     @apply relative overflow-hidden font-syne font-bold tracking-widest uppercase
-           px-10 py-4 text-base
+           px-10 py-4 text-base rounded-xl
            border border-primary bg-transparent text-primary-foreground
            transition-all duration-200 ease-out;
     box-shadow: 0 0 12px hsl(var(--duo-purple) / 0.3),
