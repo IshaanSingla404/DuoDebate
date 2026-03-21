@@ -292,12 +292,14 @@
     background: hsl(var(--duo-surface) / 0.6);
     backdrop-filter: blur(12px);
     border: 1px solid hsl(var(--duo-border) / 0.6);
+    border-radius: 1rem;
   }
 
   .glass-panel-strong {
     background: hsl(var(--duo-surface) / 0.85);
     backdrop-filter: blur(20px);
     border: 1px solid hsl(var(--duo-border));
+    border-radius: 1rem;
   }
 }
 
