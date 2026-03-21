@@ -179,7 +179,7 @@ export function AIPanel({
     "bg-gradient-to-r from-duo-red to-duo-gold";
 
   return (
-    <aside className="w-[220px] min-w-[220px] bg-duo-surface/80 backdrop-blur-sm border-l border-duo-border flex flex-col p-4 gap-5 overflow-y-auto">
+    <aside className="w-[220px] min-w-[220px] bg-duo-surface/80 backdrop-blur-sm border-l border-duo-border flex flex-col p-4 gap-5 overflow-y-auto rounded-l-2xl">
       {/* ── Section Label ── */}
       <span className="font-mono text-[8px] tracking-[0.35em] text-duo-dim uppercase">
         AI OPPONENT
