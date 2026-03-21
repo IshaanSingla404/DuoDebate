@@ -27,9 +27,9 @@ export default function VerdictOverlay({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/92 backdrop-blur-lg">
       {/* ── Verdict Card ── */}
-      <div className="glass-panel-strong w-full max-w-[560px] mx-4">
+      <div className="glass-panel-strong w-full max-w-[560px] mx-4 rounded-2xl overflow-hidden">
         {/* Top gradient line */}
-        <div className="h-[2px] bg-gradient-to-r from-duo-purple via-duo-cyan to-duo-red" />
+        <div className="h-[2px] bg-gradient-to-r from-duo-purple via-duo-cyan to-duo-red rounded-t-2xl" />
 
         <div className="p-8 flex flex-col gap-6">
           {/* ── Eyebrow ── */}
