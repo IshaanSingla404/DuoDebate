@@ -107,7 +107,7 @@ export function UserPanel({ score, maxScore, selectedMove, onMoveChange }: UserP
         </span>
 
         {/* ── XP Progress Bar ── */}
-        <div className="w-full h-[3px] bg-duo-border2 mt-2">
+        <div className="w-full h-[3px] bg-duo-border2 mt-2 rounded-full overflow-hidden">
           <div
             className="h-full bg-gradient-to-r from-duo-purple to-duo-cyan transition-all duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
             style={{ width: `${Math.min(100, (score / Math.max(maxScore, 1)) * 100)}%` }}
