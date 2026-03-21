@@ -52,7 +52,7 @@ export default function ArenaHudBar({
             return (
               <div
                 key={i}
-                className={`w-3 h-1.5 transition-all duration-300 ${
+                className={`w-3 h-1.5 rounded-sm transition-all duration-300 ${
                   completed
                     ? "bg-duo-purple"
                     : current
