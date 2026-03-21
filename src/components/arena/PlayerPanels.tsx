@@ -76,7 +76,7 @@ export function UserPanel({ score, maxScore, selectedMove, onMoveChange }: UserP
   };
 
   return (
-    <aside className="w-[220px] min-w-[220px] bg-duo-surface/80 backdrop-blur-sm border-r border-duo-border flex flex-col p-4 gap-5 overflow-y-auto">
+    <aside className="w-[220px] min-w-[220px] bg-duo-surface/80 backdrop-blur-sm border-r border-duo-border flex flex-col p-4 gap-5 overflow-y-auto rounded-r-2xl">
       {/* ── Section Label ── */}
       <span className="font-mono text-[8px] tracking-[0.35em] text-duo-dim uppercase">
         YOUR CORNER
