@@ -50,7 +50,7 @@ export default function VerdictOverlay({
           </p>
 
           {/* ── Score Grid ── */}
-          <div className="grid grid-cols-2 border border-duo-border">
+          <div className="grid grid-cols-2 border border-duo-border rounded-xl overflow-hidden">
             <div className="p-6 flex flex-col items-center gap-2 border-r border-duo-border">
               <span className="font-syne font-extrabold text-4xl text-duo-purple tabular-nums">
                 {userScore}
