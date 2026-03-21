@@ -88,7 +88,7 @@ export default function DebateFeed({
           <button
             onClick={onSubmit}
             disabled={!inputValue.trim()}
-            className="font-syne font-bold text-sm tracking-wider uppercase px-6 py-3 bg-duo-purple text-primary-foreground hover:brightness-125 hover:shadow-[0_0_16px_hsl(248_100%_70%/0.4)] disabled:opacity-[0.35] transition-all duration-200 active:scale-[0.97]"
+            className="font-syne font-bold text-sm tracking-wider uppercase px-6 py-3 bg-duo-purple text-primary-foreground rounded-xl hover:brightness-125 hover:shadow-[0_0_16px_hsl(248_100%_70%/0.4)] disabled:opacity-[0.35] transition-all duration-200 active:scale-[0.97]"
           >
             ARGUE →
           </button>
