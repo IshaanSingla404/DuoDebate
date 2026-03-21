@@ -76,14 +76,14 @@ export function UserPanel({ score, maxScore, selectedMove, onMoveChange }: UserP
   };
 
   return (
-    <aside className="w-[220px] min-w-[220px] bg-duo-surface/80 backdrop-blur-sm border-r border-duo-border flex flex-col p-4 gap-5 overflow-y-auto">
+    <aside className="w-[220px] min-w-[220px] bg-duo-surface/80 backdrop-blur-sm border-r border-duo-border flex flex-col p-4 gap-5 overflow-y-auto rounded-r-2xl">
       {/* ── Section Label ── */}
       <span className="font-mono text-[8px] tracking-[0.35em] text-duo-dim uppercase">
         YOUR CORNER
       </span>
 
       {/* ── Player Card ── */}
-      <div className="border-l-2 border-l-duo-purple bg-duo-surface2 p-3">
+      <div className="border-l-2 border-l-duo-purple bg-duo-surface2 p-3 rounded-xl">
         <p className="font-syne font-bold text-lg text-primary-foreground">YOU</p>
         <p className="font-mono text-[9px] tracking-[0.2em] text-duo-muted uppercase">
           PROPOSING
@@ -102,12 +102,12 @@ export function UserPanel({ score, maxScore, selectedMove, onMoveChange }: UserP
         {floats.map((f) => (
           <ScoreFloat key={f.id} value={f.val} />
         ))}
-        <span className="font-mono text-[8px] tracking-[0.25em] text-duo-dim uppercase">
+        <span className="font-mono text-[8px] tracking-[0.25em] text-duo-dim uppercase mt-1">
           ARGUMENT SCORE
         </span>
 
         {/* ── XP Progress Bar ── */}
-        <div className="w-full h-[3px] bg-duo-border2 mt-2">
+        <div className="w-full h-[3px] bg-duo-border2 mt-2 rounded-full overflow-hidden">
           <div
             className="h-full bg-gradient-to-r from-duo-purple to-duo-cyan transition-all duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
             style={{ width: `${Math.min(100, (score / Math.max(maxScore, 1)) * 100)}%` }}
@@ -134,7 +134,7 @@ export function UserPanel({ score, maxScore, selectedMove, onMoveChange }: UserP
       </div>
 
       {/* ── Hint Card ── */}
-      <div className="border-l-2 border-l-duo-gold bg-duo-surface2 p-3">
+      <div className="border-l-2 border-l-duo-gold bg-duo-surface2 p-3 rounded-xl">
         <p
           className={`font-space text-xs text-duo-muted italic transition-opacity duration-150 ${
             hintFade ? "opacity-100" : "opacity-0"
@@ -179,14 +179,14 @@ export function AIPanel({
     "bg-gradient-to-r from-duo-red to-duo-gold";
 
   return (
-    <aside className="w-[220px] min-w-[220px] bg-duo-surface/80 backdrop-blur-sm border-l border-duo-border flex flex-col p-4 gap-5 overflow-y-auto">
+    <aside className="w-[220px] min-w-[220px] bg-duo-surface/80 backdrop-blur-sm border-l border-duo-border flex flex-col p-4 gap-5 overflow-y-auto rounded-l-2xl">
       {/* ── Section Label ── */}
       <span className="font-mono text-[8px] tracking-[0.35em] text-duo-dim uppercase">
         AI OPPONENT
       </span>
 
       {/* ── AI Player Card ── */}
-      <div className="border-l-2 border-l-duo-red bg-duo-surface2 p-3">
+      <div className="border-l-2 border-l-duo-red bg-duo-surface2 p-3 rounded-xl">
         <p className="font-syne font-bold text-lg text-primary-foreground">ADVERSUS</p>
         <p className="font-mono text-[9px] tracking-[0.2em] text-duo-muted uppercase">
           OPPOSING
@@ -201,7 +201,7 @@ export function AIPanel({
         <span className="font-mono text-[8px] tracking-[0.25em] text-duo-dim uppercase">
           ARGUMENT SCORE
         </span>
-        <div className="w-full h-[3px] bg-duo-border2 mt-2">
+        <div className="w-full h-[3px] bg-duo-border2 mt-2 rounded-full overflow-hidden">
           <div
             className={`h-full ${barGradient} transition-all duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)]`}
             style={{ width: `${Math.min(100, (score / Math.max(maxScore, 1)) * 100)}%` }}

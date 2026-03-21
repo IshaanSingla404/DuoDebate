@@ -27,9 +27,9 @@ export default function VerdictOverlay({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/92 backdrop-blur-lg">
       {/* ── Verdict Card ── */}
-      <div className="glass-panel-strong w-full max-w-[560px] mx-4">
+      <div className="glass-panel-strong w-full max-w-[560px] mx-4 rounded-2xl overflow-hidden">
         {/* Top gradient line */}
-        <div className="h-[2px] bg-gradient-to-r from-duo-purple via-duo-cyan to-duo-red" />
+        <div className="h-[2px] bg-gradient-to-r from-duo-purple via-duo-cyan to-duo-red rounded-t-2xl" />
 
         <div className="p-8 flex flex-col gap-6">
           {/* ── Eyebrow ── */}
@@ -50,7 +50,7 @@ export default function VerdictOverlay({
           </p>
 
           {/* ── Score Grid ── */}
-          <div className="grid grid-cols-2 border border-duo-border">
+          <div className="grid grid-cols-2 border border-duo-border rounded-xl overflow-hidden">
             <div className="p-6 flex flex-col items-center gap-2 border-r border-duo-border">
               <span className="font-syne font-extrabold text-4xl text-duo-purple tabular-nums">
                 {userScore}
@@ -74,7 +74,7 @@ export default function VerdictOverlay({
             <span className="font-mono text-[9px] tracking-[0.25em] text-duo-dim uppercase">
               JUDGE'S ANALYSIS
             </span>
-            <div className="bg-duo-surface2 p-4 border border-duo-border">
+            <div className="bg-duo-surface2 p-4 border border-duo-border rounded-xl">
               <p className="font-space text-sm text-duo-muted italic leading-relaxed">
                 A well-contested debate with strong opening arguments from both sides.
                 Your use of evidence and analogies demonstrated sophisticated rhetorical awareness.

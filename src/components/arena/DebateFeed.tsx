@@ -49,7 +49,7 @@ export default function DebateFeed({
         {/* ── AI Typing Indicator ── */}
         {isAiTyping && (
           <div className="flex justify-end">
-            <div className="flex items-center gap-1 bg-duo-surface2 border border-duo-border px-4 py-3 border-r-2 border-r-duo-red">
+            <div className="flex items-center gap-1 bg-duo-surface2 border border-duo-border px-4 py-3 border-r-2 border-r-duo-red rounded-xl">
               <span className="w-1.5 h-1.5 bg-duo-red animate-dot-pulse" style={{ animationDelay: "0ms" }} />
               <span className="w-1.5 h-1.5 bg-duo-red animate-dot-pulse" style={{ animationDelay: "200ms" }} />
               <span className="w-1.5 h-1.5 bg-duo-red animate-dot-pulse" style={{ animationDelay: "400ms" }} />
@@ -83,12 +83,12 @@ export default function DebateFeed({
             }}
             placeholder="State your argument…"
             rows={2}
-            className="flex-1 bg-duo-surface2 border border-duo-border text-foreground font-space text-sm p-3 resize-none min-h-[52px] max-h-[110px] placeholder:text-duo-dim focus:outline-none focus:border-duo-purple focus:shadow-[0_0_12px_hsl(248_100%_70%/0.2)] transition-all duration-200"
+            className="flex-1 bg-duo-surface2 border border-duo-border text-foreground font-space text-sm p-3 resize-none min-h-[52px] max-h-[110px] rounded-xl placeholder:text-duo-dim focus:outline-none focus:border-duo-purple focus:shadow-[0_0_12px_hsl(248_100%_70%/0.2)] transition-all duration-200"
           />
           <button
             onClick={onSubmit}
             disabled={!inputValue.trim()}
-            className="font-syne font-bold text-sm tracking-wider uppercase px-6 py-3 bg-duo-purple text-primary-foreground hover:brightness-125 hover:shadow-[0_0_16px_hsl(248_100%_70%/0.4)] disabled:opacity-[0.35] transition-all duration-200 active:scale-[0.97]"
+            className="font-syne font-bold text-sm tracking-wider uppercase px-6 py-3 bg-duo-purple text-primary-foreground rounded-xl hover:brightness-125 hover:shadow-[0_0_16px_hsl(248_100%_70%/0.4)] disabled:opacity-[0.35] transition-all duration-200 active:scale-[0.97]"
           >
             ARGUE →
           </button>
@@ -109,7 +109,7 @@ function MessageBubble({ message }: { message: DebateMessage }) {
       <div className={`flex items-start gap-3 max-w-[75%] ${isUser ? "" : "flex-row-reverse"}`}>
         {/* Avatar */}
         <div
-          className={`w-8 h-8 flex items-center justify-center shrink-0 ${
+          className={`w-8 h-8 flex items-center justify-center shrink-0 rounded-lg ${
             isUser ? "bg-duo-surface2 border border-duo-purple/30" : "bg-duo-surface2 border border-duo-red/30"
           }`}
         >
@@ -119,14 +119,14 @@ function MessageBubble({ message }: { message: DebateMessage }) {
         </div>
 
         {/* Bubble */}
-        <div className={`bg-duo-surface2 ${borderColor} p-3 flex flex-col gap-1.5`}>
+        <div className={`bg-duo-surface2 ${borderColor} p-3 flex flex-col gap-1.5 rounded-xl`}>
           {/* Round meta */}
           <span className="font-mono text-[9px] tracking-[0.15em] text-duo-dim">
             Round {message.round} · {message.move}
           </span>
 
           {/* Move badge */}
-          <span className={`font-mono text-[9px] tracking-[0.15em] uppercase px-1.5 py-0.5 w-fit ${badgeColor}`}>
+          <span className={`font-mono text-[9px] tracking-[0.15em] uppercase px-1.5 py-0.5 w-fit rounded-md ${badgeColor}`}>
             {message.move}
           </span>
 
@@ -136,7 +136,7 @@ function MessageBubble({ message }: { message: DebateMessage }) {
           {/* AI feedback tag */}
           {message.feedback && (
             <span
-              className={`font-mono text-[9px] tracking-[0.1em] px-1.5 py-0.5 border w-fit mt-1 ${
+              className={`font-mono text-[9px] tracking-[0.1em] px-1.5 py-0.5 border w-fit mt-1 rounded-md ${
                 message.feedback.type === "strong"
                   ? "text-duo-green border-duo-green/40"
                   : "text-duo-gold border-duo-gold/40"

@@ -52,7 +52,7 @@ export default function ArenaHudBar({
             return (
               <div
                 key={i}
-                className={`w-3 h-1.5 transition-all duration-300 ${
+                className={`w-3 h-1.5 rounded-sm transition-all duration-300 ${
                   completed
                     ? "bg-duo-purple"
                     : current
@@ -66,7 +66,7 @@ export default function ArenaHudBar({
 
         {/* Stance badge */}
         <span
-          className={`font-mono text-[10px] tracking-[0.15em] uppercase px-2 py-0.5 border ${
+          className={`font-mono text-[10px] tracking-[0.15em] uppercase px-2 py-0.5 border rounded-md ${
             stance === "for"
               ? "text-duo-purple border-duo-purple bg-duo-purple/10"
               : "text-duo-red border-duo-red bg-duo-red/10"
@@ -77,7 +77,7 @@ export default function ArenaHudBar({
 
         {/* Difficulty badge */}
         <span
-          className={`font-mono text-[10px] tracking-[0.15em] uppercase px-2 py-0.5 border ${diffColor} bg-transparent`}
+          className={`font-mono text-[10px] tracking-[0.15em] uppercase px-2 py-0.5 border rounded-md ${diffColor} bg-transparent`}
         >
           {difficulty.toUpperCase()}
         </span>

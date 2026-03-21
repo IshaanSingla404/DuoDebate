@@ -27,7 +27,7 @@ export default function Setup() {
   };
 
   return (
-    <div className="scanline-overlay noise-overlay relative min-h-screen w-full bg-background flex items-center justify-center px-4">
+    <div className="relative min-h-screen w-full bg-background flex items-center justify-center px-4">
       {/* ── Split-wipe exit animation ── */}
       {exiting && (
         <>
@@ -41,7 +41,7 @@ export default function Setup() {
       )}
 
       {/* ── Setup Card ── */}
-      <div className="glass-panel-strong w-full max-w-[580px] border-t-2 border-t-duo-purple">
+      <div className="glass-panel-strong w-full max-w-[580px] border-t-2 border-t-duo-purple rounded-2xl overflow-hidden">
         <div className="p-8 flex flex-col gap-6">
           {/* ── Eyebrow Label ── */}
           <span className="font-mono text-[11px] tracking-[0.25em] text-duo-dim uppercase">
@@ -63,7 +63,7 @@ export default function Setup() {
               onChange={(e) => setMotion(e.target.value)}
               rows={3}
               placeholder="e.g. This House Would ban social media for users under 16…"
-              className="w-full bg-duo-surface2 border border-duo-border text-foreground font-space text-sm p-3 resize-none placeholder:text-duo-dim focus:outline-none focus:border-duo-purple focus:shadow-[0_0_12px_hsl(248_100%_70%/0.2)] transition-all duration-200"
+              className="w-full bg-duo-surface2 border border-duo-border text-foreground font-space text-sm p-3 resize-none rounded-xl placeholder:text-duo-dim focus:outline-none focus:border-duo-purple focus:shadow-[0_0_12px_hsl(248_100%_70%/0.2)] transition-all duration-200"
             />
           </div>
 

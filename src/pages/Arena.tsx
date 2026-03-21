@@ -69,7 +69,7 @@ export default function Arena() {
   };
 
   return (
-    <div className="scanline-overlay noise-overlay h-screen w-screen flex flex-col bg-background overflow-hidden">
+    <div className="h-screen w-screen flex flex-col bg-background overflow-hidden">
       {/* ── Top HUD Bar ── */}
       <ArenaHudBar
         motion="perfumes"
