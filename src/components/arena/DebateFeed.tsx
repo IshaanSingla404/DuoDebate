@@ -119,7 +119,7 @@ function MessageBubble({ message }: { message: DebateMessage }) {
         </div>
 
         {/* Bubble */}
-        <div className={`bg-duo-surface2 ${borderColor} p-3 flex flex-col gap-1.5`}>
+        <div className={`bg-duo-surface2 ${borderColor} p-3 flex flex-col gap-1.5 rounded-xl`}>
           {/* Round meta */}
           <span className="font-mono text-[9px] tracking-[0.15em] text-duo-dim">
             Round {message.round} · {message.move}
