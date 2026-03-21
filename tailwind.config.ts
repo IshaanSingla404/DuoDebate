@@ -2,7 +2,12 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./lib/**/*.{js,ts,jsx,tsx,mdx}",
+    "./hooks/**/*.{js,ts,jsx,tsx,mdx}"
+  ],
   prefix: "",
   theme: {
     container: {
@@ -63,9 +68,7 @@ export default {
           muted: "hsl(var(--duo-muted))",
           dim: "hsl(var(--duo-dim))",
           purple: "hsl(var(--duo-purple))",
-          red: "hsl(var(--duo-red))",
-          green: "hsl(var(--duo-green))",
-          gold: "hsl(var(--duo-gold))",
+          blue: "hsl(var(--duo-blue))",
           cyan: "hsl(var(--duo-cyan))",
           magenta: "hsl(var(--duo-magenta))",
         },
