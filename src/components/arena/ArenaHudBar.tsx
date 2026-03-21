@@ -66,7 +66,7 @@ export default function ArenaHudBar({
 
         {/* Stance badge */}
         <span
-          className={`font-mono text-[10px] tracking-[0.15em] uppercase px-2 py-0.5 border ${
+          className={`font-mono text-[10px] tracking-[0.15em] uppercase px-2 py-0.5 border rounded-md ${
             stance === "for"
               ? "text-duo-purple border-duo-purple bg-duo-purple/10"
               : "text-duo-red border-duo-red bg-duo-red/10"
