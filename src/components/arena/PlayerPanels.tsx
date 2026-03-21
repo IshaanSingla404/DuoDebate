@@ -134,7 +134,7 @@ export function UserPanel({ score, maxScore, selectedMove, onMoveChange }: UserP
       </div>
 
       {/* ── Hint Card ── */}
-      <div className="border-l-2 border-l-duo-gold bg-duo-surface2 p-3">
+      <div className="border-l-2 border-l-duo-gold bg-duo-surface2 p-3 rounded-xl">
         <p
           className={`font-space text-xs text-duo-muted italic transition-opacity duration-150 ${
             hintFade ? "opacity-100" : "opacity-0"
