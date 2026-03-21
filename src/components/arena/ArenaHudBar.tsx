@@ -77,7 +77,7 @@ export default function ArenaHudBar({
 
         {/* Difficulty badge */}
         <span
-          className={`font-mono text-[10px] tracking-[0.15em] uppercase px-2 py-0.5 border ${diffColor} bg-transparent`}
+          className={`font-mono text-[10px] tracking-[0.15em] uppercase px-2 py-0.5 border rounded-md ${diffColor} bg-transparent`}
         >
           {difficulty.toUpperCase()}
         </span>

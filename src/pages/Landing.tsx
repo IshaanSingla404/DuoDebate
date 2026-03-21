@@ -28,7 +28,7 @@ export default function Landing() {
   }, []);
 
   return (
-    <div className="scanline-overlay noise-overlay relative min-h-screen w-full overflow-hidden bg-background flex flex-col items-center justify-center">
+    <div className="relative min-h-screen w-full overflow-hidden bg-background flex flex-col items-center justify-center">
       {/* ── Neon Energy Lines Background ── */}
       <div className={`transition-opacity duration-700 ${phase >= 1 ? "opacity-100" : "opacity-0"}`}>
         <NeonLines />

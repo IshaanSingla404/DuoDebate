@@ -206,7 +206,7 @@
   /* Gold/amber verdict button */
   .btn-verdict {
     @apply relative overflow-hidden font-syne font-bold tracking-widest uppercase
-           px-6 py-3 text-sm
+           px-6 py-3 text-sm rounded-xl
            border bg-transparent transition-all duration-200 ease-out;
     border-color: hsl(var(--duo-gold));
     color: hsl(var(--duo-gold));

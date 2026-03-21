@@ -136,7 +136,7 @@ function MessageBubble({ message }: { message: DebateMessage }) {
           {/* AI feedback tag */}
           {message.feedback && (
             <span
-              className={`font-mono text-[9px] tracking-[0.1em] px-1.5 py-0.5 border w-fit mt-1 ${
+              className={`font-mono text-[9px] tracking-[0.1em] px-1.5 py-0.5 border w-fit mt-1 rounded-md ${
                 message.feedback.type === "strong"
                   ? "text-duo-green border-duo-green/40"
                   : "text-duo-gold border-duo-gold/40"

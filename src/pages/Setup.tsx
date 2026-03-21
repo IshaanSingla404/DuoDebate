@@ -63,7 +63,7 @@ export default function Setup() {
               onChange={(e) => setMotion(e.target.value)}
               rows={3}
               placeholder="e.g. This House Would ban social media for users under 16…"
-              className="w-full bg-duo-surface2 border border-duo-border text-foreground font-space text-sm p-3 resize-none placeholder:text-duo-dim focus:outline-none focus:border-duo-purple focus:shadow-[0_0_12px_hsl(248_100%_70%/0.2)] transition-all duration-200"
+              className="w-full bg-duo-surface2 border border-duo-border text-foreground font-space text-sm p-3 resize-none rounded-xl placeholder:text-duo-dim focus:outline-none focus:border-duo-purple focus:shadow-[0_0_12px_hsl(248_100%_70%/0.2)] transition-all duration-200"
             />
           </div>
 

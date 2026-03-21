@@ -74,7 +74,7 @@ export default function VerdictOverlay({
             <span className="font-mono text-[9px] tracking-[0.25em] text-duo-dim uppercase">
               JUDGE'S ANALYSIS
             </span>
-            <div className="bg-duo-surface2 p-4 border border-duo-border">
+            <div className="bg-duo-surface2 p-4 border border-duo-border rounded-xl">
               <p className="font-space text-sm text-duo-muted italic leading-relaxed">
                 A well-contested debate with strong opening arguments from both sides.
                 Your use of evidence and analogies demonstrated sophisticated rhetorical awareness.

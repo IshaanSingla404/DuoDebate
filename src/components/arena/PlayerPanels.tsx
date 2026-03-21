@@ -102,7 +102,7 @@ export function UserPanel({ score, maxScore, selectedMove, onMoveChange }: UserP
         {floats.map((f) => (
           <ScoreFloat key={f.id} value={f.val} />
         ))}
-        <span className="font-mono text-[8px] tracking-[0.25em] text-duo-dim uppercase">
+        <span className="font-mono text-[8px] tracking-[0.25em] text-duo-dim uppercase mt-1">
           ARGUMENT SCORE
         </span>
 
