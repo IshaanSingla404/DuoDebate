@@ -1,8 +1,8 @@
-// File: C:\Users\Ishaan\OneDrive\Desktop\Codes\Hackathon-1\DuoDebate\app\voice-arena\page.tsx
-import * as entry from '../../../../app/voice-arena/page.js'
+// File: C:\Users\ADMIN\Desktop\Projects\Buildathon\DuoDebate\app\setup\page.tsx
+import * as entry from '../../../../app/setup/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
-type TEntry = typeof import('../../../../app/voice-arena/page.js')
+type TEntry = typeof import('../../../../app/setup/page.js')
 
 // Check that the entry is a valid entry
 checkFields<Diff<{

@@ -1,7 +1,10 @@
 {
-  "/voice-arena/page": "app/voice-arena/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/icon.svg/route": "app/icon.svg/route.js",
+  "/page": "app/page.js",
+  "/setup/page": "app/setup/page.js",
+  "/api/verdict/route": "app/api/verdict/route.js",
   "/arena/page": "app/arena/page.js",
-  "/api/debate/route": "app/api/debate/route.js"
+  "/api/debate/route": "app/api/debate/route.js",
+  "/api/score/route": "app/api/score/route.js",
+  "/api/feedback/route": "app/api/feedback/route.js",
+  "/api/hint/route": "app/api/hint/route.js"
 }

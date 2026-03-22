@@ -423,6 +423,32 @@
   .animate-slow-reveal {
     animation: slowReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
+
+  .animate-score-float {
+    animation: scoreFloat 1.2s ease-out forwards;
+  }
+
+  .animate-score-pop {
+    animation: scorePop 0.3s ease-out;
+  }
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes scoreFloat {
+  0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-24px); }
+}
+
+@keyframes scorePop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
 }
 
 @layer components {
