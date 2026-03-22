@@ -341,6 +341,8 @@ function VoiceArenaContent() {
           onRequestVerdict={() => setShowVerdict(true)}
           stance={stance === "for" ? "against" : "for"}
           isSpeaking={isAiSpeaking}
+          canRequestVerdict={messages.length > 0}
+          hasSentMessage={messages.some(m => m.sender === "user")}
         />
       </div>
 
@@ -350,6 +352,7 @@ function VoiceArenaContent() {
         aiScore={aiScore}
         isOpen={showVerdict}
         onClose={() => setShowVerdict(false)}
+        isLoading={false}
       />
     </div>
   );

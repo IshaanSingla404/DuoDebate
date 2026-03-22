@@ -130,19 +130,21 @@ interface AIPanelProps {
   totalRounds: number;
   onRequestVerdict: () => void;
   stance: "for" | "against";
-  canRequestVerdict: boolean;
-  onGetFeedback: () => void;
-  onGetHint: () => void;
-  feedbackText: string | null;
-  hintText: string | null;
-  isFeedbackLoading: boolean;
-  isHintLoading: boolean;
-  hasSentMessage: boolean;
+  canRequestVerdict?: boolean;
+  onGetFeedback?: () => void;
+  onGetHint?: () => void;
+  feedbackText?: string | null;
+  hintText?: string | null;
+  isFeedbackLoading?: boolean;
+  isHintLoading?: boolean;
+  hasSentMessage?: boolean;
+  isSpeaking?: boolean;
 }
 
 export function AIPanel({
   score, maxScore, difficulty, currentRound, totalRounds, onRequestVerdict, stance,
-  canRequestVerdict, onGetFeedback, onGetHint, feedbackText, hintText, isFeedbackLoading, isHintLoading, hasSentMessage,
+  canRequestVerdict = false, onGetFeedback, onGetHint, feedbackText, hintText, 
+  isFeedbackLoading = false, isHintLoading = false, hasSentMessage = false, isSpeaking = false,
 }: AIPanelProps) {
   const diffColor = difficulty === "novice" ? "text-duo-cyan" : difficulty === "adept" ? "text-duo-purple" : "text-duo-magenta";
   const isFor = stance === "for";
@@ -151,6 +153,9 @@ export function AIPanel({
   const btnClass = isFor ? "btn-arena glow-cyan" : "btn-arena-pink glow-magenta";
   /* AI stance label: inverse of user (Change 1) */
   const aiStanceLabel = isFor ? "OPPOSING" : "PROPOSING";
+
+  const showFeedbackBtn = !!onGetFeedback;
+  const showHintBtn = !!onGetHint;
 
   return (
     <aside className={`w-[220px] min-w-[220px] ${bgClass} flex flex-col p-4 gap-5 overflow-y-auto rounded-l-2xl border-r-0 rounded-r-none`}>
@@ -176,10 +181,25 @@ export function AIPanel({
       </div>
       <div className="mt-auto flex flex-col gap-2">
         <button onClick={onRequestVerdict} disabled={!canRequestVerdict} className={`${btnClass} w-full disabled:opacity-40 disabled:cursor-not-allowed`}>⬡ REQUEST VERDICT</button>
-        <button onClick={onGetFeedback} disabled={!hasSentMessage || isFeedbackLoading} className="btn-toggle w-full text-[0.6rem] py-1.5 disabled:opacity-30 disabled:cursor-not-allowed">{isFeedbackLoading ? "ANALYZING..." : "GET FEEDBACK"}</button>
+        
+        {showFeedbackBtn && (
+          <button onClick={onGetFeedback} disabled={!hasSentMessage || isFeedbackLoading} className="btn-toggle w-full text-[0.6rem] py-1.5 disabled:opacity-30 disabled:cursor-not-allowed">{isFeedbackLoading ? "ANALYZING..." : "GET FEEDBACK"}</button>
+        )}
         {feedbackText && (<div className="bg-gradient-to-br from-duo-purple/10 to-transparent border border-duo-purple/30 p-2.5 rounded-lg"><p className="font-space text-[0.75rem] text-[#c8c5db] leading-relaxed">{feedbackText}</p></div>)}
-        <button onClick={onGetHint} disabled={!hasSentMessage || isHintLoading} className="btn-toggle w-full text-[0.55rem] py-1 disabled:opacity-30 disabled:cursor-not-allowed">{isHintLoading ? "THINKING..." : "HINT"}</button>
+        
+        {showHintBtn && (
+          <button onClick={onGetHint} disabled={!hasSentMessage || isHintLoading} className="btn-toggle w-full text-[0.55rem] py-1 disabled:opacity-30 disabled:cursor-not-allowed">{isHintLoading ? "THINKING..." : "HINT"}</button>
+        )}
         {hintText && (<div className="bg-gradient-to-br from-duo-cyan/10 to-transparent border border-duo-cyan/30 p-2.5 rounded-lg"><p className="font-space text-[0.75rem] text-[#c8c5db] leading-relaxed">{hintText}</p></div>)}
+
+        {isSpeaking && (
+          <div className="flex items-center justify-center gap-2 py-2 animate-pulse">
+            <div className={`w-1.5 h-4 rounded-full ${isFor ? "bg-duo-cyan" : "bg-duo-magenta"}`} style={{ animation: 'bounce 0.6s infinite alternate' }} />
+            <div className={`w-1.5 h-6 rounded-full ${isFor ? "bg-duo-cyan" : "bg-duo-magenta"}`} style={{ animation: 'bounce 0.6s infinite alternate 0.1s' }} />
+            <div className={`w-1.5 h-4 rounded-full ${isFor ? "bg-duo-cyan" : "bg-duo-magenta"}`} style={{ animation: 'bounce 0.6s infinite alternate 0.2s' }} />
+            <span className="font-mono text-[0.6rem] tracking-widest text-duo-muted uppercase ml-2">SPEAKING...</span>
+          </div>
+        )}
       </div>
     </aside>
   );

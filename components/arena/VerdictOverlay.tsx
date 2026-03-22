@@ -13,7 +13,7 @@ interface VerdictOverlayProps {
   aiScore: number;
   isOpen: boolean;
   onClose: () => void;
-  isLoading: boolean;
+  isLoading?: boolean;
   winner?: "user" | "ai" | "draw";
   magnitude?: "draw" | "close" | "clear" | "dominant";
   headline?: string;
@@ -23,7 +23,7 @@ interface VerdictOverlayProps {
 
 export default function VerdictOverlay({
   userScore, aiScore, isOpen, onClose,
-  isLoading, winner, headline, analysis, keyMoment,
+  isLoading = false, winner, headline, analysis, keyMoment,
 }: VerdictOverlayProps) {
   const router = useRouter();
   if (!isOpen) return null;
