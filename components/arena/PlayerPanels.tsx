@@ -171,6 +171,7 @@ interface AIPanelProps {
   totalRounds: number;
   onRequestVerdict: () => void;
   stance: "for" | "against";
+  isSpeaking?: boolean;
 }
 
 export function AIPanel({
@@ -181,6 +182,7 @@ export function AIPanel({
   totalRounds,
   onRequestVerdict,
   stance,
+  isSpeaking = false,
 }: AIPanelProps) {
   const diffColor =
     difficulty === "novice"
@@ -203,10 +205,19 @@ export function AIPanel({
 
       {/* ── AI Player Card ── */}
       <div className="border border-duo-blue/40 bg-gradient-to-br from-duo-blue/10 to-transparent p-3 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
-        <p className="font-syne font-bold text-lg text-primary-foreground">ADVERSUS</p>
-        <p className="font-mono text-[0.65rem] tracking-[0.15em] text-duo-muted uppercase">
-          OPPOSING
-        </p>
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="font-syne font-bold text-lg text-primary-foreground">ADVERSUS</p>
+            <p className="font-mono text-[0.65rem] tracking-[0.15em] text-duo-muted uppercase">
+              OPPOSING
+            </p>
+          </div>
+          {isSpeaking && (
+            <div className="ai-speaking-bars">
+              <span /><span /><span /><span />
+            </div>
+          )}
+        </div>
       </div>
 
       {/* ── AI Score ── */}

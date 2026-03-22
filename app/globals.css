@@ -445,6 +445,92 @@
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   VOICE MODE — Mic Button & AI Speaking
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes micRingPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+@keyframes speakingBar {
+  0%, 100% { height: 4px; }
+  50% { height: 16px; }
+}
+
+@layer components {
+  /* ── Mic Button Base ── */
+  .mic-btn {
+    @apply relative flex items-center justify-center rounded-full cursor-pointer
+           transition-all duration-300 ease-out;
+    width: 96px;
+    height: 96px;
+    background: linear-gradient(135deg, hsl(var(--bg-card)), hsl(var(--bg-panel)));
+    border: 2px solid hsl(var(--duo-purple) / 0.4);
+    box-shadow: 0 0 20px hsl(var(--duo-purple) / 0.15),
+                inset 0 0 20px hsl(var(--duo-purple) / 0.05);
+  }
+
+  .mic-btn:hover {
+    border-color: hsl(var(--duo-purple) / 0.7);
+    box-shadow: 0 0 30px hsl(var(--duo-purple) / 0.3),
+                inset 0 0 20px hsl(var(--duo-purple) / 0.08);
+  }
+
+  /* ── Mic Button Recording State ── */
+  .mic-btn-recording {
+    border-color: hsl(var(--duo-magenta) / 0.8) !important;
+    box-shadow: 0 0 30px hsl(var(--duo-magenta) / 0.5),
+                0 0 60px hsl(var(--duo-magenta) / 0.2),
+                inset 0 0 20px hsl(var(--duo-magenta) / 0.1) !important;
+  }
+
+  /* ── Pulsing Ring (shown around mic when recording) ── */
+  .mic-ring {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid hsl(var(--duo-magenta) / 0.6);
+    animation: micRingPulse 1.5s ease-out infinite;
+    pointer-events: none;
+  }
+
+  .mic-ring:nth-child(2) {
+    animation-delay: 0.5s;
+  }
+
+  .mic-ring:nth-child(3) {
+    animation-delay: 1s;
+  }
+
+  /* ── AI Speaking Indicator Bars ── */
+  .ai-speaking-bars {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 20px;
+  }
+
+  .ai-speaking-bars span {
+    width: 3px;
+    border-radius: 2px;
+    background: hsl(var(--duo-cyan));
+    animation: speakingBar 0.8s ease-in-out infinite;
+  }
+
+  .ai-speaking-bars span:nth-child(1) { animation-delay: 0ms; }
+  .ai-speaking-bars span:nth-child(2) { animation-delay: 150ms; }
+  .ai-speaking-bars span:nth-child(3) { animation-delay: 300ms; }
+  .ai-speaking-bars span:nth-child(4) { animation-delay: 450ms; }
+}
+
 ::-webkit-scrollbar {
   width: 4px;
 }

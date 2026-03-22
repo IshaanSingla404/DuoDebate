@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 
 type Stance = "for" | "against";
 type Difficulty = "novice" | "adept" | "oracle";
+type Mode = "text" | "voice";
 
 export default function Setup() {
   const router = useRouter();
@@ -19,6 +20,7 @@ export default function Setup() {
   const [motion, setMotion] = useState("");
   const [stance, setStance] = useState<Stance | null>(null);
   const [difficulty, setDifficulty] = useState<Difficulty>("adept");
+  const [mode, setMode] = useState<Mode>("text");
 
   /* ── Dynamic Theming ── */
   const isFor = stance === "for";
@@ -35,7 +37,8 @@ export default function Setup() {
 
   const handleBegin = () => {
     setExiting(true);
-    setTimeout(() => router.push(`/arena?stance=${stance}&difficulty=${difficulty}`), 500);
+    const route = mode === "voice" ? "/voice-arena" : "/arena";
+    setTimeout(() => router.push(`${route}?stance=${stance}&difficulty=${difficulty}`), 500);
   };
 
   return (
@@ -90,6 +93,33 @@ export default function Setup() {
               placeholder="e.g. This House Would ban social media for users under 16…"
               className={`w-full bg-gradient-to-b from-duo-surface2 to-background border text-foreground font-space text-sm p-3 resize-none rounded-xl placeholder:text-duo-dim focus:outline-none transition-all duration-300 ${textAreaTheme}`}
             />
+          </div>
+
+          {/* ── Mode Selector ── */}
+          <div className="flex flex-col gap-2">
+            <label className="font-mono text-[0.65rem] tracking-[0.2em] text-duo-muted uppercase">
+              Mode
+            </label>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setMode("text")}
+                className={`btn-toggle flex-1 ${mode === "text" ? (isAgainst ? "active-pink" : "active-blue") : ""}`}
+              >
+                <span className="flex items-center justify-center gap-2">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  TEXT
+                </span>
+              </button>
+              <button
+                onClick={() => setMode("voice")}
+                className={`btn-toggle flex-1 ${mode === "voice" ? (isAgainst ? "active-pink" : "active-blue") : ""}`}
+              >
+                <span className="flex items-center justify-center gap-2">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                  VOICE
+                </span>
+              </button>
+            </div>
           </div>
 
           {/* ── Stance Selector ── */}

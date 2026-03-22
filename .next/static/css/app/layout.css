@@ -725,6 +725,71 @@ body{
     filter: brightness(1.1);
   }
 /* Exit/Entry Curtains */
+/* ── Mic Button Base ── */
+.mic-btn{
+  position: relative;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    width: 96px;
+    height: 96px;
+    background: linear-gradient(135deg, hsl(var(--bg-card)), hsl(var(--bg-panel)));
+    border: 2px solid hsl(var(--duo-purple) / 0.4);
+    box-shadow: 0 0 20px hsl(var(--duo-purple) / 0.15),
+                inset 0 0 20px hsl(var(--duo-purple) / 0.05);
+}
+.mic-btn:hover {
+    border-color: hsl(var(--duo-purple) / 0.7);
+    box-shadow: 0 0 30px hsl(var(--duo-purple) / 0.3),
+                inset 0 0 20px hsl(var(--duo-purple) / 0.08);
+  }
+/* ── Mic Button Recording State ── */
+.mic-btn-recording {
+    border-color: hsl(var(--duo-magenta) / 0.8) !important;
+    box-shadow: 0 0 30px hsl(var(--duo-magenta) / 0.5),
+                0 0 60px hsl(var(--duo-magenta) / 0.2),
+                inset 0 0 20px hsl(var(--duo-magenta) / 0.1) !important;
+  }
+/* ── Pulsing Ring (shown around mic when recording) ── */
+.mic-ring {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid hsl(var(--duo-magenta) / 0.6);
+    animation: micRingPulse 1.5s ease-out infinite;
+    pointer-events: none;
+  }
+.mic-ring:nth-child(2) {
+    animation-delay: 0.5s;
+  }
+.mic-ring:nth-child(3) {
+    animation-delay: 1s;
+  }
+/* ── AI Speaking Indicator Bars ── */
+.ai-speaking-bars {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 20px;
+  }
+.ai-speaking-bars span {
+    width: 3px;
+    border-radius: 2px;
+    background: hsl(var(--duo-cyan));
+    animation: speakingBar 0.8s ease-in-out infinite;
+  }
+.ai-speaking-bars span:nth-child(1) { animation-delay: 0ms; }
+.ai-speaking-bars span:nth-child(2) { animation-delay: 150ms; }
+.ai-speaking-bars span:nth-child(3) { animation-delay: 300ms; }
+.ai-speaking-bars span:nth-child(4) { animation-delay: 450ms; }
 .sr-only{
   position: absolute;
   width: 1px;
@@ -1091,6 +1156,9 @@ body{
 .min-h-0{
   min-height: 0px;
 }
+.min-h-\[48px\]{
+  min-height: 48px;
+}
 .min-h-\[52px\]{
   min-height: 52px;
 }
@@ -1216,6 +1284,9 @@ body{
 .max-w-\[260px\]{
   max-width: 260px;
 }
+.max-w-\[500px\]{
+  max-width: 500px;
+}
 .max-w-\[560px\]{
   max-width: 560px;
 }
@@ -1336,6 +1407,9 @@ body{
 }
 .cursor-default{
   cursor: default;
+}
+.cursor-not-allowed{
+  cursor: not-allowed;
 }
 .cursor-pointer{
   cursor: pointer;
@@ -2418,6 +2492,9 @@ body{
 .ease-out{
   animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
+.animate-glow-pulse {
+    animation: glowPulse 3s ease-in-out infinite;
+  }
 .animate-pip-pulse {
     animation: pipPulse 2s ease-in-out infinite;
   }
@@ -2505,6 +2582,26 @@ body{
 @keyframes curtainUpReveal {
   0% { transform: translateY(0%); }
   100% { transform: translateY(-100%); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   VOICE MODE — Mic Button & AI Speaking
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes micRingPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+@keyframes speakingBar {
+  0%, 100% { height: 4px; }
+  50% { height: 16px; }
 }
 
 ::-webkit-scrollbar {

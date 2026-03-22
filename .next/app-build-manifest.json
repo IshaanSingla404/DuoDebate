@@ -16,20 +16,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
-    "/arena/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/arena/page.js"
-    ],
-    "/_not-found/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
-    ],
     "/setup/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/setup/page.js"
+    ],
+    "/voice-arena/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/voice-arena/page.js"
     ]
   }
 }
