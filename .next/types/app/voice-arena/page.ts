@@ -1,5 +1,10 @@
+<<<<<<< HEAD:.next/types/app/voice-arena/page.ts
 // File: C:\Users\Ishaan\OneDrive\Desktop\Codes\Hackathon-1\DuoDebate\app\voice-arena\page.tsx
 import * as entry from '../../../../app/voice-arena/page.js'
+=======
+// File: C:\Users\ADMIN\Desktop\Projects\Buildathon\DuoDebate\app\arena\page.tsx
+import * as entry from '../../../../app/arena/page.js'
+>>>>>>> bf131408d96eb241f617e185d32eefccaeeddde5:.next/types/app/arena/page.ts
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
 type TEntry = typeof import('../../../../app/voice-arena/page.js')

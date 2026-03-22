@@ -1,4 +1,4 @@
-// File: C:\Users\Ishaan\OneDrive\Desktop\Codes\Hackathon-1\DuoDebate\app\setup\page.tsx
+// File: C:\Users\ADMIN\Desktop\Projects\Buildathon\DuoDebate\app\setup\page.tsx
 import * as entry from '../../../../app/setup/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
