@@ -1,5 +1,7 @@
 {
-  "/page": "app/page.js",
-  "/setup/page": "app/setup/page.js",
-  "/voice-arena/page": "app/voice-arena/page.js"
+  "/voice-arena/page": "app/voice-arena/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/icon.svg/route": "app/icon.svg/route.js",
+  "/arena/page": "app/arena/page.js",
+  "/api/debate/route": "app/api/debate/route.js"
 }

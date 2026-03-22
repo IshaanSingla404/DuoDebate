@@ -1,4 +1,4 @@
-// File: C:\Users\ADMIN\Desktop\Projects\Buildathon\DuoDebate\app\api\debate\route.ts
+// File: C:\Users\Ishaan\OneDrive\Desktop\Codes\Hackathon-1\DuoDebate\app\api\debate\route.ts
 import * as entry from '../../../../../app/api/debate/route.js'
 import type { NextRequest } from 'next/server.js'
 

@@ -37,12 +37,8 @@ export default function Setup() {
 
   const handleBegin = () => {
     setExiting(true);
-<<<<<<< HEAD
     const route = mode === "voice" ? "/voice-arena" : "/arena";
-    setTimeout(() => router.push(`${route}?stance=${stance}&difficulty=${difficulty}`), 500);
-=======
-    setTimeout(() => router.push(`/arena?stance=${stance}&difficulty=${difficulty}&motion=${encodeURIComponent(motion)}`), 500);
->>>>>>> bf131408d96eb241f617e185d32eefccaeeddde5
+    setTimeout(() => router.push(`${route}?stance=${stance}&difficulty=${difficulty}&motion=${encodeURIComponent(motion)}`), 500);
   };
 
   return (

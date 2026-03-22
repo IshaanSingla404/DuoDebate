@@ -3,6 +3,7 @@
 /* ═══════════════════════════════════════════════════════════════
    VOICE ARENA PAGE — DuoDebate
    Full 3-column voice debate interface with Web Speech API
+   Uses the same /api/debate Groq endpoint as the text arena
    Route: /voice-arena
    ═══════════════════════════════════════════════════════════════ */
 
@@ -13,17 +14,17 @@ import { UserPanel, AIPanel } from "@/components/arena/PlayerPanels";
 import VoiceDebateFeed, { type DebateMessage } from "@/components/arena/VoiceDebateFeed";
 import VerdictOverlay from "@/components/arena/VerdictOverlay";
 
-/* ── Placeholder demo messages ── */
-const DEMO_MESSAGES: DebateMessage[] = [
-  {
-    id: "1",
-    sender: "ai",
-    move: "ARGUMENT",
-    text: "The motion to promote perfumes is misguided, as it ignores the significant environmental and health concerns associated with the production and consumption of perfumes. The harvesting of rare ingredients, such as musk and ambergris, can lead to the exploitation of endangered species.",
-    round: 1,
-    feedback: { text: "Strong opening — sets clear framework", type: "strong" },
-  },
-];
+/* ── Helper: fetch with timeout (same as text arena) ── */
+async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs = 30000): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, { ...options, signal: controller.signal });
+    return res;
+  } finally {
+    clearTimeout(timer);
+  }
+}
 
 /* ── SpeechRecognition type helper ── */
 interface ISpeechRecognition extends EventTarget {
@@ -48,22 +49,101 @@ function VoiceArenaContent() {
   const searchParams = useSearchParams();
   const stance = (searchParams.get("stance") as "for" | "against") || "for";
   const difficulty = (searchParams.get("difficulty") as "novice" | "adept" | "oracle") || "adept";
+  const motion = searchParams.get("motion") || "perfumes";
 
   const [selectedMove, setSelectedMove] = useState<
     "ARGUMENT" | "REBUTTAL" | "EVIDENCE" | "ANALOGY" | "CONCESSION" | "CHALLENGE"
   >("ARGUMENT");
-  const [messages, setMessages] = useState<DebateMessage[]>(DEMO_MESSAGES);
+  const [messages, setMessages] = useState<DebateMessage[]>([]);
   const [isAiTyping, setIsAiTyping] = useState(false);
   const [isAiSpeaking, setIsAiSpeaking] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [liveTranscript, setLiveTranscript] = useState("");
   const [showVerdict, setShowVerdict] = useState(false);
+  const [initialFetched, setInitialFetched] = useState(false);
 
-  /* ── Placeholder scores ── */
+  const currentRound = Math.floor(messages.length / 2) + 1;
+
+  /* ── Scores ── */
   const userScore = 0;
   const aiScore = 0;
 
-  /* ── Speech Recognition ── */
+  /* ═══════════════════════════════════════════════════════════
+     GROQ API — identical to text arena /arena/page.tsx
+     ═══════════════════════════════════════════════════════════ */
+  const callDebateAPI = useCallback(async (
+    conversationMessages: { sender: string; text: string }[],
+    signal?: AbortSignal
+  ) => {
+    const res = await fetchWithTimeout(
+      "/api/debate",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ motion, stance, difficulty, messages: conversationMessages }),
+        signal,
+      },
+      30000
+    );
+
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({ error: "Unknown server error" }));
+      throw new Error(errorData.error || `Server responded with ${res.status}`);
+    }
+
+    const data = await res.json();
+    if (!data.reply) {
+      throw new Error("No reply in API response");
+    }
+    return data;
+  }, [motion, stance, difficulty]);
+
+  /* ── Fetch AI opening statement on mount ── */
+  useEffect(() => {
+    if (initialFetched) return;
+
+    const abortController = new AbortController();
+    let cancelled = false;
+
+    const fetchInitial = async () => {
+      setIsAiTyping(true);
+      try {
+        const data = await callDebateAPI([], abortController.signal);
+        if (!cancelled) {
+          const aiMsg: DebateMessage = {
+            id: Date.now().toString(),
+            sender: "ai",
+            move: data.move || "ARGUMENT",
+            text: data.reply,
+            round: 1,
+          };
+          setMessages([aiMsg]);
+          setInitialFetched(true);
+
+          // Speak the opening statement
+          speakText(data.reply);
+        }
+      } catch (err: unknown) {
+        if (!cancelled) {
+          const msg = err instanceof Error ? err.message : String(err);
+          if (!msg.includes("abort")) {
+            console.error("Failed to fetch initial AI opening:", err);
+          }
+        }
+      } finally {
+        if (!cancelled) setIsAiTyping(false);
+      }
+    };
+    fetchInitial();
+    return () => {
+      cancelled = true;
+      abortController.abort();
+    };
+  }, [initialFetched, callDebateAPI]);
+
+  /* ═══════════════════════════════════════════════════════════
+     SPEECH RECOGNITION
+     ═══════════════════════════════════════════════════════════ */
   const recognitionRef = useRef<ISpeechRecognition | null>(null);
   const finalTranscriptRef = useRef("");
 
@@ -84,22 +164,22 @@ function VoiceArenaContent() {
 
     recognition.onresult = (event: any) => {
       let interim = "";
-      let final = "";
+      let finalText = "";
       for (let i = 0; i < event.results.length; i++) {
         const transcript = event.results[i][0].transcript;
         if (event.results[i].isFinal) {
-          final += transcript + " ";
+          finalText += transcript + " ";
         } else {
           interim += transcript;
         }
       }
-      finalTranscriptRef.current = final;
-      setLiveTranscript(final + interim);
+      finalTranscriptRef.current = finalText;
+      setLiveTranscript(finalText + interim);
     };
 
     recognition.onend = () => {
       setIsRecording(false);
-      const text = finalTranscriptRef.current.trim() || liveTranscript.trim();
+      const text = finalTranscriptRef.current.trim();
       if (text) {
         handleVoiceSubmit(text);
       }
@@ -115,7 +195,7 @@ function VoiceArenaContent() {
     recognitionRef.current = recognition;
     recognition.start();
     setIsRecording(true);
-  }, [liveTranscript]);
+  }, []);
 
   const stopRecording = useCallback(() => {
     if (recognitionRef.current) {
@@ -133,40 +213,46 @@ function VoiceArenaContent() {
     };
   }, []);
 
-  /* ── Submit voice transcript ── */
-  const handleVoiceSubmit = useCallback((text: string) => {
+  /* ═══════════════════════════════════════════════════════════
+     SUBMIT VOICE TRANSCRIPT → GROQ API (same as text arena)
+     ═══════════════════════════════════════════════════════════ */
+  const handleVoiceSubmit = useCallback(async (text: string) => {
     const newMsg: DebateMessage = {
       id: Date.now().toString(),
       sender: "user",
       move: selectedMove,
       text,
-      round: 1,
+      round: currentRound,
     };
-    setMessages((prev) => [...prev, newMsg]);
-
-    // Simulate AI typing
+    const newMessages = [...messages, newMsg];
+    setMessages(newMessages);
     setIsAiTyping(true);
-    setTimeout(() => {
-      const aiText =
-        "An interesting point, but it fails to address the core economic benefits that the perfume industry brings to developing nations where these ingredients are sourced. Your argument conflates correlation with causation.";
+
+    try {
+      const data = await callDebateAPI(
+        newMessages.map(m => ({ sender: m.sender, text: m.text }))
+      );
       const aiMsg: DebateMessage = {
         id: (Date.now() + 1).toString(),
         sender: "ai",
-        move: "REBUTTAL",
-        text: aiText,
-        round: 1,
-        feedback: { text: "Address the economic counter-point", type: "weak" },
+        move: data.move || "REBUTTAL",
+        text: data.reply,
+        round: currentRound,
       };
+      setMessages(prev => [...prev, aiMsg]);
 
-      setMessages((prev) => [...prev, aiMsg]);
+      // Speak the AI response aloud
+      speakText(data.reply);
+    } catch (err) {
+      console.error("Failed to fetch AI reply:", err);
+    } finally {
       setIsAiTyping(false);
+    }
+  }, [selectedMove, currentRound, messages, callDebateAPI]);
 
-      // Speak the AI response
-      speakText(aiText);
-    }, 2000);
-  }, [selectedMove]);
-
-  /* ── Speech Synthesis ── */
+  /* ═══════════════════════════════════════════════════════════
+     SPEECH SYNTHESIS — speak AI responses aloud
+     ═══════════════════════════════════════════════════════════ */
   const speakText = useCallback((text: string) => {
     if (!window.speechSynthesis) return;
 
@@ -194,6 +280,9 @@ function VoiceArenaContent() {
     window.speechSynthesis.speak(utterance);
   }, []);
 
+  /* ═══════════════════════════════════════════════════════════
+     RENDER
+     ═══════════════════════════════════════════════════════════ */
   return (
     <div className="h-dvh w-screen flex flex-col bg-background overflow-hidden relative z-0" style={{ animation: 'arenaSlideIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards' }}>
       <style>{`
@@ -211,8 +300,8 @@ function VoiceArenaContent() {
 
       {/* ── Top HUD Bar ── */}
       <ArenaHudBar
-        motion="perfumes"
-        currentRound={1}
+        motion={motion}
+        currentRound={currentRound}
         totalRounds={5}
         stance={stance}
         difficulty={difficulty}
@@ -247,7 +336,7 @@ function VoiceArenaContent() {
           score={aiScore}
           maxScore={30}
           difficulty={difficulty}
-          currentRound={1}
+          currentRound={currentRound}
           totalRounds={5}
           onRequestVerdict={() => setShowVerdict(true)}
           stance={stance === "for" ? "against" : "for"}
